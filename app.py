@@ -5,7 +5,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField,PasswordField,SubmitField,EmailField
 from wtforms.validators import InputRequired,Length,ValidationError
 app =Flask(__name__)
-app.config['SQLALCHEMY_DATABASE _URI']='sqlite:///database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SECRET_KEY']='keykey'
 db=SQLAlchemy(app)
 class User(db.Model,UserMixin):
