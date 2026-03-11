@@ -1,13 +1,15 @@
 from flask import Flask ,render_template,redirect,url_for
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import UserMixin
+from flask_login import UserMixin,login_required ,login_user ,login_manager,login_fresh,login_remembered,login_url
 from flask_wtf import FlaskForm
 from wtforms import StringField,PasswordField,SubmitField,EmailField
 from wtforms.validators import InputRequired,Length,ValidationError
+from flask_bcrypt import Bcrypt
 app =Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SECRET_KEY']='keykey'
 db=SQLAlchemy(app)
+bcrypt=Bcrypt(app)
 class User(db.Model,UserMixin):
     id=db.Column(db.Integer,primary_key=True)
     first_name=db.Column(db.String(35),nullable=False)
@@ -22,14 +24,14 @@ class RegisterForm(FlaskForm):
     age = StringField(validators=[InputRequired(),Length(min=1,max=3)],render_kw={"placeholder":"age"})
     username= StringField(validators=[InputRequired(),Length(min=5,max=25)],render_kw={"placeholder":"username"})
     email=EmailField(validators=[InputRequired(),Length(min=5,max=25)],render_kw={"placeholder":"username"})
-    Password=PasswordField(validators=[InputRequired(),Length(min=6,max=20)], render_kw={"placeholder": "password"})
+    password=PasswordField(validators=[InputRequired(),Length(min=6,max=20)], render_kw={"placeholder": "password"})
     submit=SubmitField("Register")   
     def validate_username(self,username):  #اذ كان يوجد اسم مكرر فلا يقبل ذالك
         existing_user=User.query.filter_by(username=username.data).first()
         if existing_user:
             raise ValidationError("change username in other name")
 class LoginForm(FlaskForm): 
-    username_name = StringField(validators=[InputRequired(),Length(min=5,max=25)],render_kw={"placeholder":"username_name"})
+    username= StringField(validators=[InputRequired(),Length(min=5,max=25)],render_kw={"placeholder":"username"})
     Password = PasswordField(validators=[InputRequired(),Length(min=6,max=20)], render_kw={"placeholder": "password"})
     submit=SubmitField("login")
 @app.route("/")
@@ -37,19 +39,26 @@ def home():
     return render_template('home.html')
 @app.route('/login',methods=['GET','POST'])
 def login(): 
-     format=LoginForm
+     form=LoginForm()
      if form.validate_on_submit():
-        User= Use.query.filter_by(username=form.username.data)
-        if user and user.password ==form.password.data:
-            return redirect(url_for('home'))
+        user= User.query.filter_by(username=form.username.data).first()
+        if user: 
+         if bcrypt.check_password_hash(user.password, form.Password.data):
+            login_user(user)
+            return redirect(url_for('dash'))
         else:
            return render_template('login.html',form=form , error='user or password is wrong')   
-     return render_template('login.htlm',form=form)
+     return render_template('login.html',form=form)
+@app.route('/dash',methods=['GET','POST'])
+@login_required
+def dash():
+    return render_template('dash.html')
 @app.route('/register',methods=['GET','POST'])
 def register():
     form = RegisterForm()
     if form.validate_on_submit():
-     new_user=User(first_name=form.first_name.data, last_name=form.last_name.data, age=form.age.data,username=form.username.data, email=form.email.data ,password=form.password.data)
+     hashed_password= bcrypt.generate_password_hash(form.password.data)   #تشفير 
+     new_user=User(first_name=form.first_name.data, last_name=form.last_name.data, age=form.age.data,username=form.username.data, email=form.email.data ,password=hashed_password)
      db.session.add(new_user)
      db.session.commit()
      return redirect(url_for('login'))
@@ -59,5 +68,7 @@ def about():
     return render_template("about.html")
 if __name__=="__main__":
     with app.app_context():
+       db.drop_all()
        db.create_all() #انشاء قاعدة بيانات تلقائية
-    app.run(debug=True) 
+       print("done")
+    app.run(debug=True)
