@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>Cart</title>
 </head>
+<link rel="stylesheet" href="{{ url_for('static', filename='cart.css') }}">
 
 <body>
 
@@ -16,13 +17,13 @@
         <h3>{{ item.product.name }}</h3>
 
         {% if item.product.image %}
-        <img src="{{ url_for('static', filename='uploads/' + item.product.image) }}" width="100"> {% endif %}
+        <img src="{{ url_for('static', filename='image/' + item.product.image) }}" width="100 "> {% endif %}
 
         <p>Price: ${{ item.product.price }}</p>
         <p>Quantity: {{ item.quantity }}</p>
         <p>Subtotal: ${{ item.subtotal }}</p>
 
-        <a href="{{ url_for('remove_from_cart', product_id=item.product.id) }}">
+        <a href="{{ url_for( 'remove_from_cart', product_id=item.product.id) }} ">
              Remove 
         </a>
 
@@ -32,13 +33,10 @@
     {% endfor %}
 
     <h3>Total: ${{ total }}</h3>
-    <a href="{{ url_for('checkout') }}">
-        💳 Buy Now / Checkout
-    </a>
+    <a href="{{ url_for( 'checkout') }} ">
+        💳 Bye New</a>
 
-    <a href="{{ url_for('clear_cart') }}">🗑 Clear Cart</a>
-    <br><br>
-    <a href="{{ url_for('home') }}">⬅ Continue Shopping</a>
+    <a href="{{ url_for( 'dash') }} ">⬅ Continue Shopping</a>
 
 </body>
 
