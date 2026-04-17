@@ -4,40 +4,71 @@
 <head>
     <meta charset="UTF-8">
     <title>Cart</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Carter+One&family=Sekuya&family=Story+Script&family=Tourney:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='cart.css') }}">
 </head>
-<link rel="stylesheet" href="{{ url_for('static', filename='cart.css') }}">
 
 <body>
 
-    <h2>🛒 Your Cart</h2>
+<!-- NAVBAR -->
+<header class="navbar">
+    <h1>Myshop.Dz</h1>
+
+    <nav>
+        <a href="{{ url_for('dash') }}">SHOP</a>
+        <a href="{{ url_for('checkout') }}">CHECKOUT</a>
+    </nav>
+</header>
+
+<!-- CART TITLE -->
+<h2 class="title">🛒 Your Cart</h2>
+
+<!-- CART CONTAINER -->
+<div class="cart-container">
 
     {% for item in products %}
-    <div>
-
-        <h3>{{ item.product.name }}</h3>
+    <div class="cart-card">
 
         {% if item.product.image %}
-        <img src="{{ url_for('static', filename='image/' + item.product.image) }}" width="100 "> {% endif %}
+        <img class="product-img"
+             src="{{ url_for('static', filename='image/' + item.product.image) }}">
+        {% endif %}
 
-        <p>Price: ${{ item.product.price }}</p>
-        <p>Quantity: {{ item.quantity }}</p>
-        <p>Subtotal: ${{ item.subtotal }}</p>
+        <div class="info">
+            <h3>{{ item.product.name }}</h3>
+            <p class="price">Price: ${{ item.product.price }}</p>
+            <p>Quantity: <b>{{ item.quantity }}</b></p>
+            <p class="subtotal">Subtotal: ${{ item.subtotal }}</p>
+        </div>
 
-        <a href="{{ url_for( 'remove_from_cart', product_id=item.product.id) }} ">
-             Remove 
-        </a>
+        <div class="actions">
+            <a class="remove-btn"
+               href="{{ url_for('remove_from_cart', product_id=item.product.id) }}">
+                ✖ Remove
+            </a>
+        </div>
 
     </div>
-    <hr> {% else %}
-    <p>Cart is empty</p>
+    {% else %}
+    <p class="empty">Your cart is empty 😢</p>
     {% endfor %}
 
-    <h3>Total: ${{ total }}</h3>
-    <a href="{{ url_for( 'checkout') }} ">
-        💳 Bye New</a>
+</div>
 
-    <a href="{{ url_for( 'dash') }} ">⬅ Continue Shopping</a>
+<!-- TOTAL -->
+<div class="summary">
+    <h3>Total: <span>${{ total }}</span></h3>
+
+    <a class="checkout-btn" href="{{ url_for('checkout') }}">
+        💳 Checkout
+    </a>
+
+    <a class="continue-btn" href="{{ url_for('dash') }}">
+        ⬅ Continue Shopping
+    </a>
+</div>
 
 </body>
-
 </html>

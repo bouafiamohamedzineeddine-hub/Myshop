@@ -1,45 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MY SHOP </title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Sekuya&family=Story+Script&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style1.css') }}">
+    <title>MY SHOP</title>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Story+Script&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
 </head>
 
 <body>
 
-    <header>
-        <h1> MYshop.DZ </h1>
-        <nav>
-            HOME PAGE</a>
-            {% if session.user %}
-            <a href="/dashboard">CONTROL PANEL</a>
-            <a href="/logout">LOG OUT</a> {% else %}
-            <a href="/login">LOG IN</a>
-            <a href="/register">REGISTER AN ACOUNT</a> {% endif %}
-        </nav>
-    </header>
+<header>
+    <h1>MYshop.DZ</h1>
 
-    <!-- admin تحكم بمنتجات من خلال  -->
-    <div class="منتجات">
+    <nav>
+        <a href="#">HOME</a>
+
+        {% if session.user %}
+            <a href="/dashboard">CONTROL PANEL</a>
+            <a href="/logout">LOG OUT</a>
+        {% else %}
+            <a href="/login">LOG IN</a>
+            <a href="/register">REGISTER</a>
+        {% endif %}
+    </nav>
+</header>
+
+<main>
+    <h2>Our Products</h2>
+
+    <div class="products">
         {% for product in products %}
-        <div class="card">
-            <img src="{{url_for('static', filename='image/' + product.image)}}">
+        <div class="product-card">
+            <img src="{{ url_for('static', filename='image/' + product.image) }}">
             <h3>{{ product.name }}</h3>
             <p>{{ product.description }}</p>
-            <p>${{ product.price }}</p>
+            <p class="price">${{ product.price }}</p>
             <button>Buy Now</button>
         </div>
         {% else %}
-        <p>لا توجد منتجات</p>
+        <p>No products available</p>
         {% endfor %}
     </div>
+</main>
 
 </body>
-
 </html>

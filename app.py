@@ -25,7 +25,7 @@ class User(db.Model,UserMixin):
     last_name=db.Column(db.String(35),nullable=False)
     age =db.Column(db.Integer, nullable=False)
     username=db.Column(db.String(35),nullable=False,unique=True) #يمنع استخدم نفس الاسم او ايميل
-    email=db.Column(db.String(35),nullable=False,unique=True)
+    email=db.Column(db.String(50),nullable=False,unique=True)
     password=db.Column(db.String(128),nullable=False)
 class Product(db.Model):
     id=db.Column(db.Integer,primary_key=True) # خاص به يمنع تكرر idكل منتج عنده 
@@ -38,7 +38,7 @@ class RegisterForm(FlaskForm):
     last_name = StringField(validators=[InputRequired(),Length(min=3,max=25)],render_kw={"placeholder":"last_name"})
     age = IntegerField(validators=[InputRequired(), NumberRange(min=1, max=120)], render_kw={"placeholder": "age"})
     username= StringField(validators=[InputRequired(),Length(min=3,max=25)],render_kw={"placeholder":"username"})
-    email=EmailField(validators=[InputRequired(),Length(min=5,max=25)],render_kw={"placeholder":"email"})
+    email=EmailField(validators=[InputRequired(),Length(min=5,max=50)],render_kw={"placeholder":"email"})
     password=PasswordField(validators=[InputRequired(),Length(min=6,max=20)], render_kw={"placeholder": "password"})
     submit=SubmitField("Register")   
     def validate_username(self,username):  #اذ كان يوجد اسم مكرر فلا يقبل ذالك
