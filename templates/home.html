@@ -1,19 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<<<<<<< HEAD
     <title>MyShop DZ</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Cabinet+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="{{ url_for('static', filename='sty.css') }}">
+=======
+    <title>MY SHOP</title>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Story+Script&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
+>>>>>>> 4d7430a4848db846856a2e1ad40cda446952de7b
 </head>
 
 <body>
 
+<<<<<<< HEAD
     <!-- HEADER -->
     <header>
         <h1>MYshop.DZ</h1>
@@ -41,9 +50,35 @@
 
             <img src="{{ url_for('static', filename='image/' + product.image) }}">
 
+=======
+<header>
+    <h1>MYshop.DZ</h1>
+
+    <nav>
+        <a href="#">HOME</a>
+
+        {% if session.user %}
+            <a href="/dashboard">CONTROL PANEL</a>
+            <a href="/logout">LOG OUT</a>
+        {% else %}
+            <a href="/login">LOG IN</a>
+            <a href="/register">REGISTER</a>
+        {% endif %}
+    </nav>
+</header>
+
+<main>
+    <h2>Our Products</h2>
+
+    <div class="products">
+        {% for product in products %}
+        <div class="product-card">
+            <img src="{{ url_for('static', filename='image/' + product.image) }}">
+>>>>>>> 4d7430a4848db846856a2e1ad40cda446952de7b
             <h3>{{ product.name }}</h3>
 
             <p>{{ product.description }}</p>
+<<<<<<< HEAD
 
             <p class="price">${{ product.price }}</p>
 
@@ -53,7 +88,16 @@
         {% endfor %}
 
     </section>
+=======
+            <p class="price">${{ product.price }}</p>
+            <button>Buy Now</button>
+        </div>
+        {% else %}
+        <p>No products available</p>
+        {% endfor %}
+    </div>
+</main>
+>>>>>>> 4d7430a4848db846856a2e1ad40cda446952de7b
 
 </body>
-
 </html>
