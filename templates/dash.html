@@ -13,19 +13,27 @@
 
     <!-- NAVBAR -->
     <header class="navbar">
+        <a href="{{ url_for('dash') }}" class="logo-link">
+            <h1>My<span class="shop">Shop</span>.Dz</h1>
+        </a>
 
-        <h1>MYshop.DZ</h1>
 
+        <!-- SEARCH -->
         <input type="text" placeholder="Search products..." class="search">
 
         <nav class="nav-links">
 
-            <a href="/">Home</a>
+
 
             <a href="{{ url_for('cart') }}">
-            🛒 Cart ({{ session.get('cart', {})|length }})
-        </a> {% if current_user.is_authenticated %}
-            <a href="/logout">Logout</a> {% else %}
+            🛒 Cart ({{ session['cart']|length if session.get('cart') else 0 }})
+        </a>
+
+            <a href="#">Phones</a>
+            <a href="#">Laptops</a>
+            <a href="#">Accessories</a> {% if current_user.is_authenticated %}
+            <a href="/dash">Dashboard</a>
+            <a href="/logout" class="logout">Logout</a> {% else %}
             <a href="/login">Login</a>
             <a href="/register">Register</a> {% endif %}
 

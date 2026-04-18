@@ -17,7 +17,7 @@
     .navbar {
         background: rgba(0, 0, 0, 0.6);
         backdrop-filter: blur(10px);
-        padding: 1rem 2rem;
+        padding: 2rem 2rem;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -25,18 +25,19 @@
     
     .navbar h1 {
         font-family: "Story Script", sans-serif;
-        font-size: 28px;
+        font-weight:400;
     }
     /* SEARCH BAR */
     
     .search {
         padding: 12px 20px;
         width: 300px;
-        border-radius: 30px;
-        border: none;
+        border-radius: 50px;
+        border: 2px solid white;
         outline: none;
         background: rgba(255, 255, 255, 0.1);
         color: white;
+        margin-right: 10px;
     }
     
     .search::placeholder {
@@ -88,7 +89,7 @@
     
     .products {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(300px, 2fr));
         gap: 20px;
         padding: 40px;
     }
@@ -136,3 +137,17 @@
     .card button:hover {
         background: #2563eb;
     }
+    .logo-link h1 .shop {
+    color: #ff6b00;
+}
+.logo-link {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 22px;
+}
+
+.logo-link:hover {
+    color: #38bdf8;
+}
+

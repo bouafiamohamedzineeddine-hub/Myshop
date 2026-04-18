@@ -4,40 +4,46 @@
 <head>
     <meta charset="UTF-8">
     <title>Cart</title>
+
     <link rel="stylesheet" href="{{ url_for('static', filename='cart.css') }}">
 </head>
 
 <body>
 
-<!-- NAVBAR -->
-<header class="navbar">
-    <h1>Myshop.Dz</h1>
+    <!-- NAVBAR -->
+    <header class="navbar">
+        <h1>Myshop.Dz</h1>
 
-    <nav>
-        <a href="{{ url_for('dash') }}">SHOP</a>
-    </nav>
-</header>
+        <nav>
+            <a href="{{ url_for('dash') }}">SHOP</a>
+            <a href="{{ url_for('checkout') }}">CHECKOUT</a>
+        </nav>
+    </header>
 
-<h2 class="title">🛒 Your Cart</h2>
+    <h2 class="title">🛒 Your Cart</h2>
 
-<!-- CART ITEMS -->
-<div class="cart-container">
+    <!-- CART CONTENT -->
+    <div class="cart-container">
 
-    {% for item in products %}
-    <div class="cart-card">
+        {% for item in products %}
+        <div class="cart-card">
 
-        {% if item.product.image %}
-        <img class="product-img" src="{{ url_for('static', filename='image/' + item.product.image) }}">
-        {% endif %}
+            {% if item.product.image %}
+            <img class="product-img" src="{{ url_for('static', filename='image/' + item.product.image) }}"> {% endif %}
 
-        <div class="info">
-            <h3>{{ item.product.name }}</h3>
-            <p>${{ item.product.price }}</p>
+            <div class="info">
+                <h3>{{ item.product.name }}</h3>
+                <p class="price">Price: ${{ item.product.price }}</p>
+                <div class="qty-box">
 
-            <div class="qty-box">
-                <a href="{{ url_for('update_cart', product_id=item.product.id, action='decrease') }}">-</a>
-                <span>{{ item.quantity }}</span>
-                <a href="{{ url_for('update_cart', product_id=item.product.id, action='increase') }}">+</a>
+                    <a class="qty-btn" href="{{ url_for('update_cart', product_id=item.product.id, action='decrease') }}">-</a>
+
+                    <span class="qty">{{ item.quantity }}</span>
+
+                    <a class="qty-btn" href="{{ url_for('update_cart', product_id=item.product.id, action='increase') }}">+</a>
+
+                </div>
+                <p class="subtotal">Subtotal: ${{ item.subtotal }}</p>
             </div>
 
             <p>Subtotal: ${{ item.subtotal }}</p>
@@ -47,30 +53,30 @@
 
     </div>
     {% else %}
-    <p>Your cart is empty 😢</p>
+    <p class="empty">Your cart is empty 😢</p>
     {% endfor %}
 
-</div>
+    </div>
 
-<!-- TOTAL -->
-<div class="summary">
-    <h2>Total: ${{ total }}</h2>
-</div>
+    <!-- TOTAL -->
+    <div class="summary">
+        <h2>Total: ${{ total }}</h2>
+    </div>
 
-<!-- 🚚 DELIVERY + CONFIRM -->
-<div class="delivery-box">
+    <!-- 🚚 DELIVERY + CONFIRM -->
+    <div class="delivery-box">
 
-    <h2>🚚 Delivery Information</h2>
+        <h2>🚚 Delivery Information</h2>
 
-    <form method="POST" action="{{ url_for('confirm_order') }}">
+        <form method="POST" action="{{ url_for('confirm_order') }}">
 
-        <input type="text" name="name" placeholder="Full Name" required>
+            <input type="text" name="name" placeholder="Full Name" required>
 
-        <input type="text" name="phone" placeholder="Phone Number" required>
+            <input type="text" name="phone" placeholder="Phone Number" required>
 
-        <input type="text" name="address" placeholder="Address" required>
+            <input type="text" name="address" placeholder="Address" required>
 
-        <select name="city" required>
+            <select name="city" required>
             <option disabled selected>🏙️ Select Wilaya</option>
 
             <option>Adrar</option>
@@ -91,11 +97,12 @@
             <option>Skikda</option>
         </select>
 
-        <button type="submit">🚚 Confirm Order</button>
+            <button type="submit">🚚 Confirm Order</button>
 
-    </form>
+        </form>
 
-</div>
+    </div>
 
 </body>
+
 </html>
