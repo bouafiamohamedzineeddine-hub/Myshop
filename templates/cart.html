@@ -30,8 +30,7 @@
         <div class="cart-card">
 
             {% if item.product.image %}
-            <img class="product-img" src="{{ url_for('static', filename='image/' + item.product.image) }}">
-            {% endif %}
+            <img class="product-img" src="{{ url_for('static', filename='image/' + item.product.image) }}"> {% endif %}
 
             <div class="info">
                 <h3>{{ item.product.name }}</h3>
@@ -69,7 +68,41 @@
         <a class="continue-btn" href="{{ url_for('dash') }}">
             ⬅ Continue Shopping
         </a>
-    </div>
+        <div class="delivery-box">
+
+            <h2>🚚 Delivery Information</h2>
+
+            <form method="POST" action="{{ url_for('confirm_order') }}">
+
+                <input type="text" name="name" placeholder="Full Name" required>
+
+                <input type="text" name="phone" placeholder="Phone Number" required>
+
+                <input type="text" name="address" placeholder="Address" required>
+
+                <select name="city" required>
+                    <option disabled selected>🏙️ Select Wilaya</option>
+        
+                    <option>Adrar</option>
+                    <option>Chlef</option>
+                    <option>Laghouat</option>
+                    <option>Oum El Bouaghi</option>
+                    <option>Batna</option>
+                    <option>Béjaïa</option>
+                    <option>Biskra</option>
+                    <option>Béchar</option>
+                    <option>Blida</option>
+                    <option>Bouira</option>
+                    <option>Algiers</option>
+                    <option>Oran</option>
+                    <option>Constantine</option>
+                    <option>Sétif</option>
+                    <option>Annaba</option>
+                    <option>Skikda</option>
+                </select>
+
+                <button type="submit">🚚 Confirm Order</button>
+        </div>
 
 </body>
 

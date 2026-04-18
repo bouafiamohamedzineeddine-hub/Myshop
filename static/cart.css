@@ -1,4 +1,5 @@
 /* RESET */
+
 * {
     margin: 0;
     padding: 0;
@@ -11,7 +12,9 @@ body {
     color: rgb(248, 248, 248);
 }
 
+
 /* HEADER */
+
 header {
     background: rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(10px);
@@ -26,7 +29,9 @@ header h1 {
     font-weight: 400;
 }
 
+
 /* LOGO */
+
 .logo-link {
     color: white;
     text-decoration: none;
@@ -42,7 +47,9 @@ header h1 {
     color: #ff6b00;
 }
 
+
 /* NAV */
+
 nav a {
     color: white;
     margin-left: 1rem;
@@ -56,21 +63,27 @@ nav a:hover {
     background: #3b82f6;
 }
 
+
 /* TITLE */
+
 .title {
     text-align: center;
     margin: 25px 0;
     color: #38bdf8;
 }
 
+
 /* CART */
+
 .cart-container {
     max-width: 900px;
     margin: auto;
     padding: 10px;
 }
 
+
 /* CART CARD */
+
 .cart-card {
     display: flex;
     align-items: center;
@@ -103,7 +116,9 @@ nav a:hover {
     font-weight: bold;
 }
 
+
 /* REMOVE BUTTON */
+
 .remove-btn {
     background: #ef4444;
     padding: 8px 12px;
@@ -117,13 +132,17 @@ nav a:hover {
     background: #dc2626;
 }
 
+
 /* EMPTY */
+
 .empty {
     text-align: center;
     color: #94a3b8;
 }
 
+
 /* SUMMARY */
+
 .summary {
     text-align: center;
     margin: 30px;
@@ -136,7 +155,9 @@ nav a:hover {
     color: #22c55e;
 }
 
+
 /* BUTTONS */
+
 .checkout-btn {
     display: inline-block;
     margin-top: 10px;
@@ -159,7 +180,9 @@ nav a:hover {
     text-decoration: none;
 }
 
+
 /* QUANTITY CONTAINER */
+
 .qty-box {
     display: flex;
     align-items: center;
@@ -171,7 +194,9 @@ nav a:hover {
     width: fit-content;
 }
 
+
 /* + and - buttons */
+
 .qty-btn {
     width: 38px;
     height: 38px;
@@ -192,7 +217,9 @@ nav a:hover {
     transform: scale(1.1);
 }
 
+
 /* QUANTITY NUMBER */
+
 .qty {
     font-size: 28px;
     font-weight: bold;

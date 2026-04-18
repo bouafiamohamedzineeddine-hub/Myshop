@@ -7,6 +7,7 @@ from wtforms.validators import InputRequired,Length,ValidationError ,NumberRange
 from flask_bcrypt import Bcrypt
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
+from flask_migrate import Migrate
 app =Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SECRET_KEY']='keykey'
@@ -33,6 +34,7 @@ class Product(db.Model):
     name=db.Column(db.String(100),nullable=False)#يمنع ان يكون فارغ
     price=db.Column(db.Float,nullable=False)
     descripition=db.Column(db.String(250))
+    category = db.Column(db.String(50))
 class RegisterForm(FlaskForm):
     first_name = StringField(validators=[InputRequired(),Length(min=3,max=25)],render_kw={"placeholder":"first_name"})
     last_name = StringField(validators=[InputRequired(),Length(min=3,max=25)],render_kw={"placeholder":"last_name"})
@@ -127,7 +129,7 @@ def cart():
             total += subtotal
             products.append({'product': product,'quantity': quantity,'subtotal': subtotal})
     return render_template('cart.html', products=products, total=total)
-@app.route('/update_cart/<int:product_id>/<action>')
+@app.route('/update_cart/<int:product_id>/<action>')#اضافة او انقاص الطلب
 @login_required
 def update_cart(product_id, action):
     cart = session.get('cart', {})
@@ -140,10 +142,8 @@ def update_cart(product_id, action):
         cart[pid] -= 1
         if cart[pid] <= 0:
             del cart[pid]
-
     session['cart'] = cart
     session.modified = True
-
     return redirect(url_for('cart'))
 @app.route('/remove_from_cart/<int:product_id>') #حذف داخل السلة
 def remove_from_cart(product_id):
@@ -169,13 +169,16 @@ def checkout():
             subtotal = product.price * quantity
             total += subtotal
         items.append({'product': product,'quantity': quantity,'subtotal': subtotal })
+   
     return render_template('checkout.html', items=items, total=total)
+@app.route("/category/<string:page>")
+def category(page):
+    products = Product.query.filter_by(category=page).all()
+    return render_template("dash.html", products=products, current_category=page)
 @app.route('/confirm_order', methods=['POST'])
- # اتمام الطلب وتفريغ السلة
-@login_required
-def confirm_order():
+def confirm_order(): # اتمام الطلب وتفريغ السلة
     session.pop('cart', None) 
-    return render_template('success.html')
+    return render_template('dash.html')
 if __name__=="__main__":
  with app.app_context():
     db.create_all()
