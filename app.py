@@ -52,7 +52,7 @@ class LoginForm(FlaskForm):
 @app.route("/") 
 def home():
     products = Product.query.all()
-    return render_template('home.html', products=products)
+    return render_template('dash.html', products=products)
 @app.route('/login',methods=['GET','POST'])
 def login(): 
      form=LoginForm()
@@ -69,7 +69,7 @@ def login():
 def dash():
     products = Product.query.all()
     return render_template('dash.html', products=products) #دخول الى الصفحة
-@app.route('/logout',methods=['GETt','POST'])
+@app.route('/logout',methods=['GET','POST'])
 @login_required
 def logout():
     logout_user()

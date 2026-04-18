@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MyShop</title>
+    <title>Dashboard - MyShop DZ</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Story+Script&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
@@ -13,54 +13,71 @@
 
 <body>
 
-<!-- NAVBAR -->
-<header class="navbar">
-    <h1>MYshop.DZ</h1>
+    <!-- ===== NAVBAR ===== -->
+    <header class="navbar">
 
-    <input type="text" placeholder="Search for phones, PCs..." class="search">
+        <h1>MYshop.DZ</h1>
 
-    <div class="nav-links">
-        <a href="#">HOME</a>
-        <a href="{{ url_for('cart') }}">🛒 CART</a>
-        <a href="#">PHONES</a>
-        <a href="#">LAPTOPS</a>
-        <a href="#">ACCESORIES</a>
-        <a href="{{ url_for('home') }}">LOGOUT</a>
-    </div>
-</header>
+        <!-- SEARCH -->
+        <input type="text" placeholder="Search products..." class="search">
 
-<!-- HERO -->
-<section class="hero">
-    <h1>Latest Tech, Best Prices</h1>
-    <p>Discover top smartphones and powerful computers</p>
-    <button>Shop Now</button>
-</section>
+        <!-- NAV LINKS -->
+        <nav class="nav-links">
 
-<!-- PRODUCTS -->
-<div class="products">
+            <a href="/">Home</a>
 
-    {% for product in products %}
-    <div class="card">
-
-        <!-- FIXED IMAGE WRAPPER -->
-        <div class="img-box">
-            <img src="{{ url_for('static', filename='image/' + product.image) }}">
-        </div>
-
-        <h3>{{ product.name }}</h3>
-        <p>{{ product.description }}</p>
-        <p class="price">${{ product.price }}</p>
-
-        <a href="{{ url_for('add_to_cart', product_id=product.id) }}">
-            <button class="buy-btn">🛒 Add to Cart</button>
+            <a href="{{ url_for('cart') }}">
+            🛒 Cart ({{ session['cart']|length if session.get('cart') else 0 }})
         </a>
 
-    </div>
-    {% else %}
-    <p style="color:white;">No products available</p>
-    {% endfor %}
+            <a href="#">Phones</a>
+            <a href="#">Laptops</a>
+            <a href="#">Accessories</a> {% if current_user.is_authenticated %}
+            <a href="/dash">Dashboard</a>
+            <a href="/logout" class="logout">Logout</a> {% else %}
+            <a href="/login">Login</a>
+            <a href="/register">Register</a> {% endif %}
 
-</div>
+        </nav>
+
+    </header>
+
+    <!-- ===== HERO ===== -->
+    <section class="hero">
+        <h1>Latest Tech, Best Prices</h1>
+        <p>Discover top smartphones and powerful computers</p>
+        <a href="#products">
+            <button>🛍 Shop Now</button>
+        </a>
+    </section>
+
+    <!-- ===== PRODUCTS ===== -->
+    <section class="products" id="products">
+
+        {% for product in products %}
+        <div class="card">
+
+            <div class="img-box">
+                <img src="{{ url_for('static', filename='image/' + product.image) }}">
+            </div>
+
+            <h3>{{ product.name }}</h3>
+
+            <p>{{ product.description }}</p>
+
+            <p class="price">${{ product.price }}</p>
+
+            <a href="{{ url_for('add_to_cart', product_id=product.id) }}">
+                <button class="buy-btn">🛒 Add to Cart</button>
+            </a>
+
+        </div>
+        {% else %}
+        <p style="color:white;">No products available</p>
+        {% endfor %}
+
+    </section>
 
 </body>
+
 </html>
