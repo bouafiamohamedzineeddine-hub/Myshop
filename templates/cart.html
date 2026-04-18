@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Cart</title>
-
+    <link href="https://fonts.googleapis.com/css2?family=Story+Script&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='cart.css') }}">
 </head>
 
@@ -12,19 +12,20 @@
 
     <!-- NAVBAR -->
     <header class="navbar">
-        <h1>Myshop.Dz</h1>
-
+        <a href="{{ url_for('dash') }}" class="logo-link">
+            <h1>My<span class="shop">Shop</span>.Dz</h1>
+        </a>
         <nav>
             <a href="{{ url_for('dash') }}">SHOP</a>
             <a href="{{ url_for('checkout') }}">CHECKOUT</a>
         </nav>
     </header>
 
+    <!-- TITLE -->
     <h2 class="title">🛒 Your Cart</h2>
 
     <!-- CART CONTENT -->
     <div class="cart-container">
-
         {% for item in products %}
         <div class="cart-card">
 
@@ -34,74 +35,74 @@
             <div class="info">
                 <h3>{{ item.product.name }}</h3>
                 <p class="price">Price: ${{ item.product.price }}</p>
+
                 <div class="qty-box">
-
                     <a class="qty-btn" href="{{ url_for('update_cart', product_id=item.product.id, action='decrease') }}">-</a>
-
                     <span class="qty">{{ item.quantity }}</span>
-
                     <a class="qty-btn" href="{{ url_for('update_cart', product_id=item.product.id, action='increase') }}">+</a>
-
                 </div>
+
                 <p class="subtotal">Subtotal: ${{ item.subtotal }}</p>
             </div>
 
-            <p>Subtotal: ${{ item.subtotal }}</p>
+            <div class="actions">
+                <a class="remove-btn" href="{{ url_for('remove_from_cart', product_id=item.product.id) }}">
+                    ✖ Remove
+                </a>
+            </div>
+
         </div>
-
-        <a class="remove-btn" href="{{ url_for('remove_from_cart', product_id=item.product.id) }}">❌</a>
-
-    </div>
-    {% else %}
-    <p class="empty">Your cart is empty 😢</p>
-    {% endfor %}
-
+        {% else %}
+        <p class="empty">Your cart is empty 😢</p>
+        {% endfor %}
     </div>
 
     <!-- TOTAL -->
     <div class="summary">
-        <h2>Total: ${{ total }}</h2>
-    </div>
+        <h3>Total: <span>${{ total }}</span></h3>
 
-    <!-- 🚚 DELIVERY + CONFIRM -->
-    <div class="delivery-box">
+        <a class="checkout-btn" href="{{ url_for('checkout') }}">
+            💳 Checkout
+        </a>
 
-        <h2>🚚 Delivery Information</h2>
+        <a class="continue-btn" href="{{ url_for('dash') }}">
+            ⬅ Continue Shopping
+        </a>
+        <div class="delivery-box">
 
-        <form method="POST" action="{{ url_for('confirm_order') }}">
+            <h2>🚚 Delivery Information</h2>
 
-            <input type="text" name="name" placeholder="Full Name" required>
+            <form method="POST" action="{{ url_for('confirm_order') }}">
 
-            <input type="text" name="phone" placeholder="Phone Number" required>
+                <input type="text" name="name" placeholder="Full Name" required>
 
-            <input type="text" name="address" placeholder="Address" required>
+                <input type="text" name="phone" placeholder="Phone Number" required>
 
-            <select name="city" required>
-            <option disabled selected>🏙️ Select Wilaya</option>
+                <input type="text" name="address" placeholder="Address" required>
 
-            <option>Adrar</option>
-            <option>Chlef</option>
-            <option>Laghouat</option>
-            <option>Oum El Bouaghi</option>
-            <option>Batna</option>
-            <option>Béjaïa</option>
-            <option>Biskra</option>
-            <option>Béchar</option>
-            <option>Blida</option>
-            <option>Bouira</option>
-            <option>Algiers</option>
-            <option>Oran</option>
-            <option>Constantine</option>
-            <option>Sétif</option>
-            <option>Annaba</option>
-            <option>Skikda</option>
-        </select>
+                <select name="city" required>
+                    <option disabled selected>🏙️ Select Wilaya</option>
+        
+                    <option>Adrar</option>
+                    <option>Chlef</option>
+                    <option>Laghouat</option>
+                    <option>Oum El Bouaghi</option>
+                    <option>Batna</option>
+                    <option>Béjaïa</option>
+                    <option>Biskra</option>
+                    <option>Béchar</option>
+                    <option>Blida</option>
+                    <option>Bouira</option>
+                    <option>Algiers</option>
+                    <option>Oran</option>
+                    <option>Constantine</option>
+                    <option>Sétif</option>
+                    <option>Annaba</option>
+                    <option>Skikda</option>
+                </select>
 
-            <button type="submit">🚚 Confirm Order</button>
-
-        </form>
-
-    </div>
+                <button type="submit">🚚 Confirm Order</button>
+        </div>
 
 </body>
 

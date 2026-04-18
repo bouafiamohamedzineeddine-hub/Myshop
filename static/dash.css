@@ -25,7 +25,7 @@
     
     .navbar h1 {
         font-family: "Story Script", sans-serif;
-        font-weight:400;
+        font-weight: 400;
     }
     /* SEARCH BAR */
     
@@ -137,17 +137,18 @@
     .card button:hover {
         background: #2563eb;
     }
+    
     .logo-link h1 .shop {
-    color: #ff6b00;
-}
-.logo-link {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 22px;
-}
-
-.logo-link:hover {
-    color: #38bdf8;
-}
-
+        color: #ff6b00;
+    }
+    
+    .logo-link {
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 22px;
+    }
+    
+    .logo-link:hover {
+        color: #38bdf8;
+    }
