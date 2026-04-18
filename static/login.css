@@ -37,6 +37,43 @@ body {
     font-size: 16px;
     outline: none;
 }
+/* TARGET FLASK SUBMIT BUTTON */
+.login-container input[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 30px;
+    font-size: 18px;
+    cursor: pointer;
+    margin-top: 15px;
+    color: white;
+
+    /* animated gradient */
+    background: linear-gradient(270deg, #667eea, #764ba2, #667eea);
+    background-size: 400% 400%;
+    animation: gradientMove 4s ease infinite;
+
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* HOVER */
+.login-container input[type="submit"]:hover {
+    transform: translateY(-4px) scale(1.04);
+    box-shadow: 0 10px 25px rgba(102, 126, 234, 0.5);
+}
+
+/* CLICK */
+.login-container input[type="submit"]:active {
+    transform: scale(0.96);
+    box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+}
+
+/* ANIMATION */
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
 
 .login-container input:focus {
     border-color: #667eea;
