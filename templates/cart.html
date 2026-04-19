@@ -68,42 +68,87 @@
         <a class="continue-btn" href="{{ url_for('dash') }}">
             ⬅ Continue Shopping
         </a>
-        <div class="delivery-box">
+<div class="delivery-box">
 
-            <h2>🚚 Delivery Information</h2>
+    <h2>🚚 Delivery Information</h2>
 
-            <form method="POST" action="{{ url_for('confirm_order') }}">
+    <form method="POST" action="{{ url_for('confirm_order') }}" class="delivery-form">
 
-                <input type="text" name="name" placeholder="Full Name" required>
-
-                <input type="text" name="phone" placeholder="Phone Number" required>
-
-                <input type="text" name="address" placeholder="Address" required>
-
-                <select name="city" required>
-                    <option disabled selected>🏙️ Select Wilaya</option>
-        
-                    <option>Adrar</option>
-                    <option>Chlef</option>
-                    <option>Laghouat</option>
-                    <option>Oum El Bouaghi</option>
-                    <option>Batna</option>
-                    <option>Béjaïa</option>
-                    <option>Biskra</option>
-                    <option>Béchar</option>
-                    <option>Blida</option>
-                    <option>Bouira</option>
-                    <option>Algiers</option>
-                    <option>Oran</option>
-                    <option>Constantine</option>
-                    <option>Sétif</option>
-                    <option>Annaba</option>
-                    <option>Skikda</option>
-                </select>
-
-                <button type="submit">🚚 Confirm Order</button>
+        <div class="input-group">
+            <input type="text" name="name" required>
+            <label>Full Name</label>
         </div>
 
+        <div class="input-group">
+            <input type="text" name="phone" required>
+            <label>Phone Number</label>
+        </div>
+
+        <div class="input-group">
+            <input type="text" name="address" required>
+            <label>Address</label>
+        </div>
+
+        <div class="input-group">
+        <select name="city" required>
+    <option disabled selected>🏙️ Select Wilaya</option>
+
+    <option value="01">01 - Adrar</option>
+    <option value="02">02 - Chlef</option>
+    <option value="03">03 - Laghouat</option>
+    <option value="04">04 - Oum El Bouaghi</option>
+    <option value="05">05 - Batna</option>
+    <option value="06">06 - Béjaïa</option>
+    <option value="07">07 - Biskra</option>
+    <option value="08">08 - Béchar</option>
+    <option value="09">09 - Blida</option>
+    <option value="10">10 - Bouira</option>
+    <option value="11">11 - Tamanrasset</option>
+    <option value="12">12 - Tébessa</option>
+    <option value="13">13 - Tlemcen</option>
+    <option value="14">14 - Tiaret</option>
+    <option value="15">15 - Tizi Ouzou</option>
+    <option value="16">16 - Algiers</option>
+    <option value="17">17 - Djelfa</option>
+    <option value="18">18 - Jijel</option>
+    <option value="19">19 - Sétif</option>
+    <option value="20">20 - Saïda</option>
+    <option value="21">21 - Skikda</option>
+    <option value="22">22 - Sidi Bel Abbès</option>
+    <option value="23">23 - Annaba</option>
+    <option value="24">24 - Guelma</option>
+    <option value="25">25 - Constantine</option>
+    <option value="26">26 - Médéa</option>
+    <option value="27">27 - Mostaganem</option>
+    <option value="28">28 - M'Sila</option>
+    <option value="29">29 - Mascara</option>
+    <option value="30">30 - Ouargla</option>
+    <option value="31">31 - Oran</option>
+    <option value="32">32 - El Bayadh</option>
+    <option value="33">33 - Illizi</option>
+    <option value="34">34 - Bordj Bou Arréridj</option>
+    <option value="35">35 - Boumerdès</option>
+    <option value="36">36 - El Tarf</option>
+    <option value="37">37 - Tindouf</option>
+    <option value="38">38 - Tissemsilt</option>
+    <option value="39">39 - El Oued</option>
+    <option value="40">40 - Khenchela</option>
+    <option value="41">41 - Souk Ahras</option>
+    <option value="42">42 - Tipaza</option>
+    <option value="43">43 - Mila</option>
+    <option value="44">44 - Aïn Defla</option>
+    <option value="45">45 - Naâma</option>
+    <option value="46">46 - Aïn Témouchent</option>
+    <option value="47">47 - Ghardaïa</option>
+    <option value="48">48 - Relizane</option>
+
+</select>
+        </div>
+
+        <button type="submit" class="confirm-btn">🚚 Confirm Order</button>
+
+    </form>
+</div>
 </body>
 
 </html>

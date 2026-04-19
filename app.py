@@ -8,6 +8,8 @@ from flask_bcrypt import Bcrypt
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 from flask_migrate import Migrate
+from flask import request
+from sqlalchemy import or_
 app =Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SECRET_KEY']='keykey'
@@ -51,21 +53,46 @@ class LoginForm(FlaskForm):
     username=StringField(validators=[InputRequired(),Length(min=3,max=25)],render_kw={"placeholder":"username"})
     password=PasswordField(validators=[InputRequired(),Length(min=6,max=20)], render_kw={"placeholder": "password"})
     submit=SubmitField("login")
+@app.route('/search')
+def search():
+    query = request.args.get('q')  # الكلمة اللي كتبها المستخدم
+
+    if query:
+        products = Product.query.filter(
+            or_(
+                Product.name.ilike(f"%{query}%"),
+                Product.descripition.ilike(f"%{query}%"),
+                Product.category.ilike(f"%{query}%")
+            )
+        ).all()
+    else:
+        products = []
+
+    return render_template('dash.html', products=products, search=query)
 @app.route("/") 
 def home():
     products = Product.query.all()
     return render_template('dash.html', products=products)
+from flask import request
+
 @app.route('/login',methods=['GET','POST'])
 def login(): 
-     form=LoginForm()
-     if form.validate_on_submit():
-        user= User.query.filter_by(username=form.username.data).first() #تحقق اذا كان يوجد الاسم في التخزين
-        if user and bcrypt.check_password_hash(user.password, form.password.data):#اذ كان كلمة سر صحيحة يسجل
+    form = LoginForm()
+
+    if form.validate_on_submit():
+        user = User.query.filter_by(username=form.username.data).first()
+
+        if user and bcrypt.check_password_hash(user.password, form.password.data):
+
             login_user(user)
-            return redirect(url_for('dash'))
+
+            next_page = request.args.get('next')  # 🔥 get page user wanted
+            return redirect(next_page or url_for('dash'))  # fallback to dash
+
         else:
-           return render_template('login.html',form=form , error='Invalid username or password')   
-     return render_template('login.html',form=form)
+            return render_template('login.html', form=form, error='Invalid username or password')
+
+    return render_template('login.html', form=form)
 @app.route('/dash',methods=['GET','POST'])
 @login_required  
 def dash():
@@ -75,6 +102,7 @@ def dash():
 @login_required
 def logout():
     logout_user()
+    session.clear()   # 🔥 clear EVERYTHING (not just cart)
     return redirect(url_for('home'))
 @app.route('/register',methods=['GET','POST'])
 def register():
@@ -112,7 +140,7 @@ def add_to_cart(product_id):
     if str(product_id) in cart:
         cart[str(product_id)] += 1
     else:
-        cart[str(product_id)] = 1
+        cart[str(product_id)] = 0
     session['cart'] = cart
     return redirect(url_for('dash'))
 @app.route('/cart')#صناعة السلة
